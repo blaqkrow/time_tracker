@@ -14,6 +14,17 @@ class _LandingPageState extends State<LandingPage> {
 
   FirebaseUser _user;
 
+  @override
+  void initState() { //called when widget is added into state tree (aka upon starting the app)
+    super.initState();
+    _checkCurrentUser();
+  }
+
+  Future<void> _checkCurrentUser() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    _updateUser(user);
+  }
+
   void _updateUser(FirebaseUser user) {
     setState(() { // when setState is called -> build method fires again!
       _user = user;
