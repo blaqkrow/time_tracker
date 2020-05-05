@@ -20,6 +20,10 @@ class _LandingPageState extends State<LandingPage> {
   void initState() { //called when widget is added into state tree (aka upon starting the app)
     super.initState();
     _checkCurrentUser();
+    widget.auth.onAuthStateChanged.listen((user) {
+      // ? -> if user is null
+      print('user: ${user?.uid}');
+    });
   }
 
   Future<void> _checkCurrentUser() async {
