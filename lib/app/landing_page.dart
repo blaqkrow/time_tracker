@@ -39,15 +39,32 @@ class _LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    if(_user == null) {
-      return SignInPage(
-        auth: widget.auth,
-        onSignIn: _updateUser,// onSignIn and updateUser have the SAME method signature
-      );
-    }
-    return HomePage(
-      auth: widget.auth,
-      onSignOut: () => _updateUser(null),
+    return StreamBuilder<User>( //streams of type User
+      stream: widget.auth.onAuthStateChanged,
+      // initialData: , <- initial data of stream
+      builder: (context, snapshot) { 
+        //called whenever there is a new value in the stream
+        //snapshot -> object that holds data from stream
+        if(snapshot.hasData){
+          User user = snapshot.data; //because stream returns a User
+          if(user == null) {
+            return SignInPage(
+              auth: widget.auth,
+              onSignIn: _updateUser,// onSignIn and updateUser have the SAME method signature
+            );
+          }
+          return HomePage(
+            auth: widget.auth,
+            onSignOut: () => _updateUser(null),
+          );
+        } else { //when no data is in the stream
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
     );
   }
 }
