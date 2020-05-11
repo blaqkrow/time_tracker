@@ -72,6 +72,8 @@ class Auth implements AuthBase { //Decouple firebase class from app
 
   @override
   Future<void> signOut() async {
+    final googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut();
     await _firebaseAuth.signOut();
   }
 }
