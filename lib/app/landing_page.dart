@@ -18,7 +18,7 @@ class LandingPage extends StatelessWidget {
         if(snapshot.connectionState == ConnectionState.active){
           User user = snapshot.data; //because stream returns a User
           if(user == null) {
-            return SignInPage();
+            return SignInPage.create(context);
           }
           return HomePage();
         } else { //when no data is in the stream
