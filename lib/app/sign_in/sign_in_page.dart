@@ -39,8 +39,7 @@ class SignInPage extends StatelessWidget {
   }
   Future<void> _signInWithGoogle(BuildContext context) async {
     try {
-      final auth = Provider.of<AuthBase>(context, listen: false);      
-    await auth.signInWithGoogle();
+      await bloc.signInWithGoogle();
     } on PlatformException catch (e) {
       if(e.code != 'ERROR_ABORTED_BY_USER') {
         _showSignInError(context, e);
